@@ -4,11 +4,13 @@ import com.bilgeadam.tutorial.springboot.entities.Employee;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.EntityManager;
-import java.util.Set;
+import java.util.List;
 
+@Repository
 public class EmployeeDAOImplementation implements EmployeeDAO{
 
     private EntityManager entityManager;
@@ -19,12 +21,12 @@ public class EmployeeDAOImplementation implements EmployeeDAO{
     }
 
     @Override
-    public Set<Employee> findAll() {
+    public List<Employee> findAll() {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<Employee> employeeQuery = currentSession.createQuery("FROM Employees", Employee.class);
+        Query<Employee> employeeQuery = currentSession.createQuery("FROM Employee", Employee.class);
 
-        return (Set<Employee>) employeeQuery.getResultList();
+        return employeeQuery.getResultList();
     }
 
     @Override
