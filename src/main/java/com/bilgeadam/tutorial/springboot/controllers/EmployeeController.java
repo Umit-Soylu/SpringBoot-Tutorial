@@ -2,6 +2,7 @@ package com.bilgeadam.tutorial.springboot.controllers;
 
 import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.services.EmployeeService;
+import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +39,7 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEmployee(@PathVariable(name = "id") int employee_id, @Valid @RequestBody Employee employee){
         if (employee.getId() != employee_id)
-            throw new RuntimeException("Illegal call");
+            throw new IllegalRestArgument("Provided id:" + employee.getId() + " does not compatible with " + employee_id);
 
         employeeService.update(employee);
     }
