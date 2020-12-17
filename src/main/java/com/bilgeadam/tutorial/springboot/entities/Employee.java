@@ -1,6 +1,8 @@
 package com.bilgeadam.tutorial.springboot.entities;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.Set;
@@ -16,6 +18,7 @@ public class Employee {
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
+    @Size(min = 1, max = 50)
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
