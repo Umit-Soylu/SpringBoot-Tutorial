@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    EmployeeDAO employeeDAO;
+    private final EmployeeDAO employeeDAO;
 
     @Autowired
     public EmployeeService(EmployeeDAO employeeDAO) {
