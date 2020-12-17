@@ -1,7 +1,9 @@
 package com.bilgeadam.tutorial.springboot.services;
 
-import com.bilgeadam.tutorial.springboot.dao.EmployeeDAO;
+import com.bilgeadam.tutorial.springboot.dao.EmployeeJPA;
 import com.bilgeadam.tutorial.springboot.entities.Employee;
+import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
+import com.bilgeadam.tutorial.springboot.utils.RecordNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,49 +12,50 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeDAO employeeDAO;
+    private final EmployeeJPA employeeDAO;
 
     @Autowired
-    public EmployeeService(EmployeeDAO employeeDAO) {
+    public EmployeeService(EmployeeJPA employeeDAO) {
         this.employeeDAO = employeeDAO;
     }
 
     @Transactional(readOnly = true)
     public List<Employee> findAll(){
-        return employeeDAO.findAll();
+        List<Employee> employeeList = employeeDAO.findAll();
+
+        if(employeeList.isEmpty())
+            throw new RecordNotFound(Employee.class);
+        else
+            return employeeList;
     }
 
     @Transactional(readOnly = true)
     public Employee findById(int id){
-        Employee employee = employeeDAO.findById(id);
-
-        if (employee == null)
-            throw new RuntimeException("Requested resource not found");
-        else
-            return employee;
+        return employeeDAO.findById(id).
+                orElseThrow(() -> new RecordNotFound(Employee.class));
     }
 
     @Transactional
     public void save(Employee employee) {
-        if (employeeDAO.findById(employee.getId()) != null)
-            throw new RuntimeException("Given employee already exists");
+        if (employeeDAO.findById(employee.getId()).isPresent())
+            throw new IllegalRestArgument("Given employee already exists");
         else
             employeeDAO.save(employee);
     }
 
     @Transactional
     public void update(Employee employee){
-        if (employeeDAO.findById(employee.getId()) == null)
-            throw new RuntimeException("Requested employee does not exist");
+        if (employeeDAO.findById(employee.getId()).isEmpty())
+            throw new IllegalRestArgument("Requested employee does not exist");
         else
             employeeDAO.save(employee);
     }
 
     @Transactional
     public void delete(int employee_id){
-        if (employeeDAO.findById(employee_id) == null)
-            throw new RuntimeException("Requested employee does not exist");
+        if (employeeDAO.findById(employee_id).isEmpty())
+            throw new IllegalRestArgument("Requested employee does not exist");
         else
-            employeeDAO.delete(employee_id);
+            employeeDAO.deleteById(employee_id);
     }
 }
