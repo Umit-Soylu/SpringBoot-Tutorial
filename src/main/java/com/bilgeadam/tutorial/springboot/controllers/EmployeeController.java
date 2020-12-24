@@ -2,19 +2,18 @@ package com.bilgeadam.tutorial.springboot.controllers;
 
 import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.services.EmployeeService;
-import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-
 @RestController
-@Validated
 @RequestMapping("/employees")
 public class EmployeeController {
+    // Default parameters for pagination
+    private static final String defaultPage = "0", defaultSize = "5";
+    private static final Sort.Direction defaultSorting = Sort.Direction.ASC;
 
     private final EmployeeService employeeService;
 
@@ -25,35 +24,46 @@ public class EmployeeController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> findEmployees(){
-        return employeeService.findAll();
+    public Page<Employee> getAllEmployees(@RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                          @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        return employeeService.getEmployees(page, size);
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Employee findEmployeeById(@PathVariable(name = "id") int employee_id){
-        return employeeService.findById(employee_id);
+    @ResponseStatus(HttpStatus.FOUND)
+    public Employee findEmployee(@PathVariable(name = "id") Long id){
+        return employeeService.findEmployee(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addEmployee(@RequestBody Employee employee){
-        employeeService.save(employee);
-    }
-
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateEmployee(@PathVariable(name = "id") int employee_id, @Valid @RequestBody Employee employee){
-        if (employee.getId() != employee_id)
-            throw new IllegalRestArgument("Provided id:" + employee.getId() + " does not compatible with " + employee_id);
-
-        employeeService.update(employee);
+    public Employee createEmployee(@RequestBody Employee employee){
+        return employeeService.saveEmployee(employee);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.GONE)
-    public void deleteEmployee(@PathVariable(name = "id") int employee_id){
-        employeeService.delete(employee_id);
+    public void deleteEmployee(@PathVariable(name = "id") Long id){
+        employeeService.deleteEmployee(id);
+    }
+
+    @GetMapping("/age/{value}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public Page<Employee> findByAge(@PathVariable(name = "value") Integer age,
+                                    @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                    @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        return employeeService.findEmployeesByAge(age, page, size);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.FOUND)
+    public Page<Employee> searchSimilarFirstName(@RequestParam(name = "firstName") String firstName,
+                                                 @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                                 @RequestParam(name = "size", defaultValue = defaultSize) Integer size,
+                                                 @RequestParam(name = "sort") String sort){
+        Sort sortOrder = Sort.by(Sort.Direction.valueOf(sort), "firstName");
+
+        return employeeService.findEmployeesFirstNameLike(firstName, page, size, sortOrder);
     }
 
 }

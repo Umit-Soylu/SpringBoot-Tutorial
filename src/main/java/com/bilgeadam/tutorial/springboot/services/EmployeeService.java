@@ -1,61 +1,62 @@
 package com.bilgeadam.tutorial.springboot.services;
 
+
 import com.bilgeadam.tutorial.springboot.dao.EmployeeJPA;
 import com.bilgeadam.tutorial.springboot.entities.Employee;
-import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
-import com.bilgeadam.tutorial.springboot.utils.RecordNotFound;
+import com.bilgeadam.tutorial.springboot.utils.EntityNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeJPA employeeDAO;
+    private final EmployeeJPA employeeJPA;
 
     @Autowired
-    public EmployeeService(EmployeeJPA employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeService(EmployeeJPA employeeJPA) {
+        this.employeeJPA = employeeJPA;
     }
 
-    @Transactional(readOnly = true)
-    public List<Employee> findAll(){
-        List<Employee> employeeList = employeeDAO.findAll();
+    @Transactional(readOnly = true, timeout = 100)
+    public Page<Employee> getEmployees(int page, int size){
+        Page<Employee> employeePage = employeeJPA.findAll(PageRequest.of(page, size));
 
-        if(employeeList.isEmpty())
-            throw new RecordNotFound(Employee.class);
+        if (employeePage.isEmpty())
+            throw new EntityNotFound(Employee.class);
         else
-            return employeeList;
+            return employeePage;
     }
 
-    @Transactional(readOnly = true)
-    public Employee findById(int id){
-        return employeeDAO.findById(id).
-                orElseThrow(() -> new RecordNotFound(Employee.class));
+    @Transactional(readOnly = true, timeout = 100)
+    public Employee findEmployee(Long id){
+       return employeeJPA.findById(id).
+               orElseThrow(() -> new EntityNotFound(Employee.class, id));
     }
 
-    @Transactional
-    public void save(Employee employee) {
-        if (employeeDAO.findById(employee.getId()).isPresent())
-            throw new IllegalRestArgument("Given employee already exists");
-        else
-            employeeDAO.save(employee);
+    @Transactional(timeout = 100)
+    public Employee saveEmployee(Employee employee){
+        return employeeJPA.save(employee);
     }
 
-    @Transactional
-    public void update(Employee employee){
-        if (employeeDAO.findById(employee.getId()).isEmpty())
-            throw new IllegalRestArgument("Requested employee does not exist");
-        else
-            employeeDAO.save(employee);
+    @Transactional(timeout = 100)
+    public void deleteEmployee(Long id) {
+        employeeJPA.deleteById(id);
     }
 
-    @Transactional
-    public void delete(int employee_id){
-        if (employeeDAO.findById(employee_id).isEmpty())
-            throw new IllegalRestArgument("Requested employee does not exist");
-        else
-            employeeDAO.deleteById(employee_id);
+    @Transactional(timeout = 100, readOnly = true)
+    public Page<Employee> findEmployeesByAge(Integer age, Integer page, Integer size){
+        return employeeJPA.findByAge(age, PageRequest.of(page, size));
+    }
+
+    @Transactional(timeout = 100, readOnly = true)
+    public Page<Employee> findEmployeesFirstNameLike(String firstName, Integer page, Integer size, Sort sort){
+        return employeeJPA.findByFirstNameLike(firstName, PageRequest.of(page, size, sort));
+    }
+
+    public void test(){
+        Example.of(new Employee());
+        ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues();
     }
 }
