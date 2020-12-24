@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+</head>
+<body>
+    <h4 th:text="#{welcome}"></h4>
+    <p th:text="'Hello ' + ${name} + '.'"></p>
+
+    <footer>
+        <sub th:text = "'Time is '+ ${date} + '.'"></sub>
+    </footer>
+</body>
+</html>

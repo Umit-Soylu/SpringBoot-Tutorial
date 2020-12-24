@@ -1,11 +1,13 @@
 package com.bilgeadam.tutorial.springboot.controllers;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import java.util.Date;
+
+@Controller
 public class GenericController {
     /*
     //@RequestMapping(method = RequestMethod.GET, path = "/")
@@ -14,9 +16,12 @@ public class GenericController {
         return "Welcome to SpringBoot tutorials";
     }
     */
-    @GetMapping(path = "/welcome/{name}")
-    public String Welcome(@PathVariable(value = "name", required = false) String name){
-        return "Welcome to SpringBoot tutorials, " + name;
+
+    @GetMapping(path = "/welcome")
+    public String Welcome(@RequestParam(value = "name", defaultValue = "World") String name, Model model){
+        model.addAttribute("name", name);
+        model.addAttribute("date", new Date());
+        return "welcome";
     }
 
     /*
@@ -30,10 +35,10 @@ public class GenericController {
     public String Welcome(@RequestBody Employee employee){
         return "Welcome to SpringBoot tutorials, " + employee;
     }
-*/
+
     @GetMapping("/")
     public String Welcome(@RequestParam String firstName, @RequestParam String lastName){
         return "Welcome to SpringBoot tutorials, " + firstName + " " + lastName;
     }
-
+*/
 }
