@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+@Controller
 @RequestMapping("/employees")
 public class EmployeeController {
     // Default parameters for pagination
@@ -22,24 +27,41 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Employee> getAllEmployees(@RequestParam(name = "page", defaultValue = defaultPage) Integer page,
-                                          @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
-        return employeeService.getEmployees(page, size);
+    public String getAllEmployees(Model model,
+                                  @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                  @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        Page<Employee> employeePage =  employeeService.getEmployees(page, size);
+        model.addAttribute("employeePage", employeePage);
+
+        // Set page numbers
+        model.addAttribute("pageNumbers", IntStream.rangeClosed(1, employeePage.getTotalPages()).boxed().collect(Collectors.toList()));
+        return "employees/employee-list";
     }
 
+    @GetMapping("/create")
+    public String createAnEmployee(Model model){
+        model.addAttribute("employee", new Employee());
+        return "employees/employee-create";
+    }
+
+    @PostMapping
+    public String createEmployee(@ModelAttribute(name = "employee") Employee employee){
+        employeeService.saveEmployee(employee);
+
+        // redirect to list
+        return "redirect:/employees/list";
+    }
+
+    /**
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public Employee findEmployee(@PathVariable(name = "id") Long id){
         return employeeService.findEmployee(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Employee createEmployee(@RequestBody Employee employee){
-        return employeeService.saveEmployee(employee);
-    }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.GONE)
@@ -65,5 +87,5 @@ public class EmployeeController {
 
         return employeeService.findEmployeesFirstNameLike(firstName, page, size, sortOrder);
     }
-
+*/
 }

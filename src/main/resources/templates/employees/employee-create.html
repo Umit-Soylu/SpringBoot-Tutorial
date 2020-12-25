@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Employee Form</title>
+</head>
+<body>
+<div>
+    <h3 th:text="#{employee.create.title}">Employees </h3>
+
+    <hr>
+
+    <form action="#" th:action="@{/employees}" method="post" th:object="${employee}">
+        <table>
+            <tr>
+                <td th:text="#{employee.create.name}">Name</td>
+                <td>
+                    <input type="text" maxlength="50" th:field="*{firstName}" />
+                </td>
+            </tr>
+            <tr>
+                <td th:text="#{employee.create.surname}">Surname</td>
+                <td>
+                    <input type="text" maxlength="50" th:field="*{lastName}"/>
+                </td>
+            </tr>
+            <tr>
+                <td th:text="#{employee.create.age}">Age</td>
+                <td>
+                    <input type="number" min="5" max="150" th:field="*{age}">
+                </td>
+            </tr>
+        </table>
+        <button type="submit" th:text="#{employee.create.button.save}">Save</button>
+        <button type="reset" th:text="#{employee.create.button.reset}">Reset</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>List Employee Form</title>
+</head>
+<body>
+<h3 th:text="#{employee.list.title}">Employees</h3>
+<hr>
+<a th:href="@{/employees/create}" th:text="#{employee.list.link.title}">Add new employee</a>
+<hr>
+<div>
+    <table>
+        <thead>
+        <th th:text="#{employee.list.link.table.title.firstname}">Name</th>
+        <th th:text="#{employee.list.link.table.title.lastname}">Surname</th>
+        <th th:text="#{employee.list.link.table.title.age}">Age</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="tmpEmployee : ${employeePage.content}">
+            <td th:text="${tmpEmployee.firstName}">Name</td>
+            <td th:text="${tmpEmployee.lastName}">Surname</td>
+            <td th:text="${tmpEmployee.age}">Age</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${employeePage.totalPages > 1}" class="pagination" th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/employees/list(size=${employeePage.size}, page=${pageNumber}-1)}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==employeePage.number + 1} ? active">Page</a>
+</div>
+</body>
+</html>
