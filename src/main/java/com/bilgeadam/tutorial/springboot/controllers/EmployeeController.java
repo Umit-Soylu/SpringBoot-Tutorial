@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,13 +41,15 @@ public class EmployeeController {
         return "employees/employee-list";
     }
 
-    @GetMapping("/create")
-    public String createAnEmployee(Model model){
-        model.addAttribute("employee", new Employee());
+    @GetMapping("/save")
+    public String createOrModifyEmployee(@RequestParam(name = "id") Optional<Long> id, Model model){
+        model.addAttribute("employee", id.isPresent() ? employeeService.findEmployee(id.get()) : new Employee());
+
         return "employees/employee-create";
     }
 
-    @PostMapping
+
+    @PostMapping("/save")
     public String createEmployee(@ModelAttribute(name = "employee") Employee employee){
         employeeService.saveEmployee(employee);
 
@@ -54,21 +57,14 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
-    /**
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
-    public Employee findEmployee(@PathVariable(name = "id") Long id){
-        return employeeService.findEmployee(id);
-    }
-
-
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.GONE)
-    public void deleteEmployee(@PathVariable(name = "id") Long id){
+    @GetMapping("/delete")
+    public String deleteEmployee(@RequestParam(name = "id") Long id, Model model){
         employeeService.deleteEmployee(id);
-    }
 
+        // redirect to list
+        return "redirect:/employees/list";
+    }
+/**
     @GetMapping("/age/{value}")
     @ResponseStatus(HttpStatus.FOUND)
     public Page<Employee> findByAge(@PathVariable(name = "value") Integer age,

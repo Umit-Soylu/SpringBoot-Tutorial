@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create Employee Form</title>
@@ -10,12 +10,15 @@
 
     <hr>
 
-    <form action="#" th:action="@{/employees}" method="post" th:object="${employee}">
+    <form action="#" th:action="@{/employees/save}" method="post" th:object="${employee}">
+
+        <input type="hidden" th:field="*{id}"/>
+
         <table>
             <tr>
                 <td th:text="#{employee.create.name}">Name</td>
                 <td>
-                    <input type="text" maxlength="50" th:field="*{firstName}" />
+                    <input type="text" maxlength="50" th:field="*{firstName}"/>
                 </td>
             </tr>
             <tr>

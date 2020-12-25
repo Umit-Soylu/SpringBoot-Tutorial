@@ -11,7 +11,7 @@
 <body>
 <h3 th:text="#{employee.list.title}">Employees</h3>
 <hr>
-<a th:href="@{/employees/create}" th:text="#{employee.list.link.title}">Add new employee</a>
+<a th:href="@{/employees/save}" th:text="#{employee.list.link.title}">Add new employee</a>
 <hr>
 <div>
     <table>
@@ -19,6 +19,7 @@
         <th th:text="#{employee.list.link.table.title.firstname}">Name</th>
         <th th:text="#{employee.list.link.table.title.lastname}">Surname</th>
         <th th:text="#{employee.list.link.table.title.age}">Age</th>
+        <th th:text="#{employee.list.link.table.title.action}">Action</th>
         </thead>
 
         <tbody>
@@ -26,6 +27,19 @@
             <td th:text="${tmpEmployee.firstName}">Name</td>
             <td th:text="${tmpEmployee.lastName}">Surname</td>
             <td th:text="${tmpEmployee.age}">Age</td>
+
+            <!-- Update -->
+            <td>
+                <a th:href="@{/employees/save(id=${tmpEmployee.id})}"
+                   th:text="#{employee.list.link.table.title.action.update}">Update</a>
+            </td>
+
+            <!-- Delete -->
+            <td>
+                <a th:href="@{/employees/delete(id=${tmpEmployee.id})}"
+                   th:text="#{employee.list.link.table.title.action.delete}"
+                   onclick="if (!(confirm('Sure?'))) return false">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
