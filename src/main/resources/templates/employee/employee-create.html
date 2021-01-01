@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{employee.create.title}">Title</title>
+</head>
+<body>
+<div>
+    <h3 th:text="#{employee.create.welcome}">Header</h3>
+    <hr>
+</div>
+<div>
+    <form action="#" th:action="@{/employees/save}" method="POST" th:object="${employee}">
+        <table>
+            <tr>
+                <td th:text="#{employee.create.firstname}">First Name</td>
+                <td>
+                    <input type="text" th:maxlength="*{maxLength}"
+                           th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
+                           th:field="*{firstName}">
+                </td>
+            </tr>
+
+            <tr>
+                <td th:text="#{employee.create.lastname}">Last Name</td>
+                <td>
+                    <input type="text" th:maxlength="*{maxLength}"
+                           th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
+                           th:field="*{lastName}">
+                </td>
+            </tr>
+
+            <tr>
+                <td th:text="#{employee.create.gender}">Gender</td>
+                <td>
+                    <select th:field="*{gender}">
+                        <option th:value="Male" th:text="#{employee.create.gender.male}">Male</option>
+                        <option th:value="Female" th:text="#{employee.create.gender.female}">Female</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" th:text="#{employee.create.button.submit}">Save</button>
+        <button type="reset" th:text="#{employee.create.button.reset}">Reset</button>
+    </form>
+</div>
+</body>
+</html>

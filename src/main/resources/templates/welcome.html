@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{welcome.title}">Test</title>
+</head>
+<body>
+<div>
+    <h3 th:text="#{welcome.header}">Dummy Message</h3>
+    <br>
+    <a th:text="#{welcome.link.employee.message}" th:href="@{/employees/create}">Employee Create Link</a>
+    <br>
+    <p th:text="#{welcome.time.message} + ' ' + ${time}"></p>
+</div>
+</body>
+</html>

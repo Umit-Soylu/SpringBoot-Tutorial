@@ -2,19 +2,22 @@ package com.bilgeadam.tutorial.springboot.controllers;
 
 import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.services.EmployeeService;
-import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.util.List;
 
-@RestController
-@Validated
+@Controller
 @RequestMapping("/employees")
 public class EmployeeController {
+    // Default parameters for pagination
+    private static final String defaultPage = "0", defaultSize = "5";
+    private static final Sort.Direction defaultSorting = Sort.Direction.ASC;
 
     private final EmployeeService employeeService;
 
@@ -23,10 +26,32 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping("/list")
+    public String listEmployees(Model model){
+        model.addAttribute("employees", employeeService.findAll(0,5));
+
+        return "employee/employee-list";
+    }
+
+    @GetMapping("/create")
+    public String createEmployee(Model model){
+        model.addAttribute("employee", new Employee());
+
+        return "employee/employee-create";
+    }
+
+    @PostMapping("/save")
+    public String saveEmployee(@ModelAttribute(name = "employee") Employee employee){
+        //(Employee) model.getAttribute("employee")
+        employeeService.save(employee);
+        return "redirect:/hello";
+    }
+/*
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> findEmployees(){
-        return employeeService.findAll();
+    public Page<Employee> findEmployees(@RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                        @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        return employeeService.findAll(page, size);
     }
 
     @GetMapping("/{id}")
@@ -56,4 +81,14 @@ public class EmployeeController {
         employeeService.delete(employee_id);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.FOUND)
+    public Page<Employee> searchSimilarFirstName(@RequestParam(name = "firstName") String firstName,
+                                                 @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                                 @RequestParam(name = "size", defaultValue = defaultSize) Integer size,
+                                                 @RequestParam(name = "sort") String sort) {
+        Sort sortOrder = Sort.by(Sort.Direction.valueOf(sort), "firstName");
+        return null; //employeeService.findEmployeesFirstNameLike(firstName, page, size, sortOrder);
+    }
+    */
 }

@@ -5,10 +5,10 @@ import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.utils.IllegalRestArgument;
 import com.bilgeadam.tutorial.springboot.utils.RecordNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -20,8 +20,8 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public List<Employee> findAll(){
-        List<Employee> employeeList = employeeDAO.findAll();
+    public Page<Employee> findAll(int page, int size){
+        Page<Employee> employeeList = employeeDAO.findAll(PageRequest.of(page, size));
 
         if(employeeList.isEmpty())
             throw new RecordNotFound(Employee.class);
