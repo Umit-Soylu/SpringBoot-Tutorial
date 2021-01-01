@@ -13,6 +13,11 @@
 <hr>
 <a th:href="@{/employees/save}" th:text="#{employee.list.link.title}">Add new employee</a>
 <hr>
+
+<div>
+    <p><a th:href="@{/logout}" th:text="#{employee.create.link.logout}">Logout</a></p>
+</div>
+
 <div>
     <table>
         <thead>
@@ -50,5 +55,7 @@
        th:text="${pageNumber}"
        th:class="${pageNumber==employeePage.number + 1} ? active">Page</a>
 </div>
+
+
 </body>
 </html>
