@@ -5,10 +5,12 @@
     <title>Welcome Page</title>
 </head>
 <body>
-    <h4 th:text="#{welcome.title}"></h4>
+    <h4 th:text="#{welcome.title}">Header</h4>
 
     <div>
         <p th:text="#{welcome.greeting} + ' ' + ${name} + '.'"></p>
+        <p> List of employees can be found <a href="/employees/list/"> here </a> </p>
+        <p> You can create a new employee by clicking <a href="/employees/save/"> here </a> </p>
     </div>
 
     <sub th:text = "#{welcome.time} + ' ' + ${date}"></sub>
