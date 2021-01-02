@@ -19,15 +19,28 @@
         <th th:text="#{employee.create.firstname}">First Name</th>
         <th th:text="#{employee.create.lastname}">Last Name</th>
         <th th:text="#{employee.create.gender}">Gender</th>
+        <th th:text="#{employee.action}">Action</th>
         </thead>
         <tbody>
-        <tr th:each="tmpEmployee : ${employees.content}">
+        <tr th:each="tmpEmployee : ${employees}">
             <td th:text="${tmpEmployee.firstName}">First Name</td>
             <td th:text="${tmpEmployee.lastName}">Last Name</td>
             <td th:text="${tmpEmployee.gender}">Gender </td>
+            <td>
+                <a th:href="@{/employees/create(id=${tmpEmployee.id})}"
+                   th:text="#{employee.button.update}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/employees/delete(id=${tmpEmployee.id})}"
+                   th:text="#{employee.button.delete}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
+</div>
+<div th:if="${pageNumbers.size} > 1" class="pagination" th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/employees/list(size=5, page=${pageNumber}-1)}"
+       th:text="${pageNumber}">Page</a>
 </div>
 </body>
 </html>

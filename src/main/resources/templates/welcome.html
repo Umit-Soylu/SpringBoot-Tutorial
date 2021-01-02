@@ -8,7 +8,8 @@
 <div>
     <h3 th:text="#{welcome.header}">Dummy Message</h3>
     <br>
-    <a th:text="#{welcome.link.employee.message}" th:href="@{/employees/create}">Employee Create Link</a>
+    <p><a th:text="#{welcome.link.employee.create.message}" th:href="@{/employees/create}">Employee Create Link</a></p>
+    <p><a th:text="#{welcome.link.employee.list.message}" th:href="@{/employees/list}">Employee List Link</a></p>
     <br>
     <p th:text="#{welcome.time.message} + ' ' + ${time}"></p>
 </div>

@@ -37,7 +37,7 @@ public class EmployeeService {
 
     @Transactional
     public void save(Employee employee) {
-        if (employeeDAO.findById(employee.getId()).isPresent())
+        if (employee.getId() != null && employeeDAO.findById(employee.getId()).isPresent())
             throw new IllegalRestArgument("Given employee already exists");
         else
             employeeDAO.save(employee);

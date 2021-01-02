@@ -20,4 +20,9 @@ public class GenericController {
 
         return "welcome";
     }
+
+    @GetMapping("/")
+    public String indexPage(){
+        return "index";
+    }
 }

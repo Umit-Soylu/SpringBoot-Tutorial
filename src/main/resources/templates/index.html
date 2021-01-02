@@ -1,0 +1,23 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{index.title}">Title</title>
+</head>
+<body>
+<div>
+    <h3 th:text="#{index.header}">Welcome</h3>
+    <br>
+    <p th:text="#{index.paragraph-1}">ds</p>
+    <p th:text="#{index.paragraph-2}">sehj</p>
+    <ul>
+        <li th:text="#{index.list.first}">First</li>
+        <li th:text="#{index.list.second}">Second</li>
+        <li th:text="#{index.list.third}">Third</li>
+    </ul>
+</div>
+<div>
+    <p> <a th:href="@{/hello}" th:text="#{index.link.text}">here</a>.</p>
+</div>
+</body>
+</html>

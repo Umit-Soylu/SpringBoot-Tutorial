@@ -3,13 +3,15 @@ package com.bilgeadam.tutorial.springboot.controllers;
 import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Controller
@@ -27,15 +29,24 @@ public class EmployeeController {
     }
 
     @GetMapping("/list")
-    public String listEmployees(Model model){
-        model.addAttribute("employees", employeeService.findAll(0,5));
+    public String listEmployees(Model model,
+                                @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
+                                @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        Page<Employee> employeePage = employeeService.findAll(page, size);
+        // Add employees
+        model.addAttribute("employees", employeePage.getContent());
 
+        //Set pagination array
+        model.addAttribute("pageNumbers",
+                IntStream.rangeClosed(1, employeePage.getTotalPages()).boxed().collect(Collectors.toList()));
         return "employee/employee-list";
     }
 
     @GetMapping("/create")
-    public String createEmployee(Model model){
-        model.addAttribute("employee", new Employee());
+    public String createEmployee(Model model,
+                                 @RequestParam(name="id", required = false) Optional<Integer> employeeId){
+        model.addAttribute("employee",
+                employeeId.isPresent() ? employeeService.findById(employeeId.get()) : new Employee());
 
         return "employee/employee-create";
     }
@@ -44,8 +55,24 @@ public class EmployeeController {
     public String saveEmployee(@ModelAttribute(name = "employee") Employee employee){
         //(Employee) model.getAttribute("employee")
         employeeService.save(employee);
-        return "redirect:/hello";
+        return "redirect:/employees/list";
     }
+
+    @PostMapping("/update")
+    public String updateEmployee(@ModelAttribute(name = "employee") Employee employee){
+        employeeService.update(employee);
+
+        return "redirect:/employees/list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteEmployeeGet(@RequestParam(name = "id") int employee_id){
+        employeeService.delete(employee_id);
+
+        return "redirect:/employees/list";
+    }
+
+
 /*
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
