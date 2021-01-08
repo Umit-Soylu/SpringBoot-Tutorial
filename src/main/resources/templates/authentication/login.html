@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{login.title}">Title</title>
+</head>
+<body>
+<div>
+    <h3 th:text="#{login.header}">Header</h3>
+</div>
+
+<div>
+    <form name="login-form" th:action="@{/authentication/login}" th:method="POST">
+        <table>
+            <tr>
+                <td th:text="#{login.username}">Username</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td th:text="#{login.password}">Password</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <td th:text="#{login.remember}">Remember me</td>
+                <td><input type="checkbox" name="remember-me-parameter"></td>
+            </tr>
+        </table>
+        <button type="submit" th:text="#{login.button.submit}">Submit</button>
+        <button type="reset" th:text="#{login.button.reset}">Reset</button>
+    </form>
+</div>
+</body>
+</html>
