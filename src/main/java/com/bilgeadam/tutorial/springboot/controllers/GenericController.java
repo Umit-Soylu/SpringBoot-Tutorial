@@ -1,6 +1,5 @@
 package com.bilgeadam.tutorial.springboot.controllers;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ import java.util.Date;
 public class GenericController {
     private static final String dateFormat = "dd MMM yyyy hh:ss:SSS";
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/hello")
     public String welcome(Model model, WebRequest request){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, request.getLocale());

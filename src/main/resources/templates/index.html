@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{index.title}">Title</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
+<div th:replace="/fragments/header::common-header">Header</div>
+
+<br>
 <div>
-    <h3 th:text="#{index.header}">Welcome</h3>
-    <br>
     <p th:text="#{index.paragraph-1}">ds</p>
     <p th:text="#{index.paragraph-2}">sehj</p>
+
     <ul>
         <li th:text="#{index.list.first}">First</li>
         <li th:text="#{index.list.second}">Second</li>
@@ -19,5 +22,7 @@
 <div>
     <p> <a th:href="@{/hello}" th:text="#{index.link.text}">here</a>.</p>
 </div>
+
+<div th:replace="/fragments/footer::common-footer">Footer</div>
 </body>
 </html>

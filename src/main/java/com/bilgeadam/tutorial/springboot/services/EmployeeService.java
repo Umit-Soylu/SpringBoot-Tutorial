@@ -7,7 +7,6 @@ import com.bilgeadam.tutorial.springboot.utils.RecordNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +29,7 @@ public class EmployeeService {
             return employeeList;
     }
 
-    @Secured("EMPLOYEE_EDIT")
+    //@Secured("EMPLOYEE_EDIT")
     @Transactional(readOnly = true)
     public Employee findById(int id){
         return employeeDAO.findById(id).

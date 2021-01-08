@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{welcome.title}">Test</title>
+    <script>
+        function myDate() {
+            document.getElementById('date').innerHTML = new Date();
+        }
+    </script>
 </head>
-<body>
+<body onload="myDate()">
+<div th:replace="/fragments/header::common-header">Header</div>
+<br>
+
 <div>
-    <h3 th:text="#{welcome.header}">Dummy Message</h3>
-    <br>
-    <p><a th:text="#{welcome.link.employee.create.message}" th:href="@{/employees/create}">Employee Create Link</a></p>
+    <p id="test"><a th:text="#{welcome.link.employee.create.message}" th:href="@{/employees/create}">Employee Create Link</a></p>
     <p><a th:text="#{welcome.link.employee.list.message}" th:href="@{/employees/list}">Employee List Link</a></p>
     <br>
-    <p th:text="#{welcome.time.message} + ' ' + ${time}"></p>
+    <div th:text="#{welcome.time.message}">Time :<span id="date">Today</span>
+
+    </div>
 </div>
 </body>
 </html>

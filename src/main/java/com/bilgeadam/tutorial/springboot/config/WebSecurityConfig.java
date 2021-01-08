@@ -3,7 +3,6 @@ package com.bilgeadam.tutorial.springboot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -37,22 +36,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //.csrf().disable() //cross site request forgery
                 .authorizeRequests()
-                //.antMatchers("/hello").permitAll()
-                .antMatchers("/employees/create").hasRole("ADMIN")
-                .antMatchers("/employees/**").hasAnyRole(new String[]{"EMPLOYEE", "ADMIN"})
+                    .antMatchers("/hello").permitAll()
+                    .antMatchers("/employees/create").hasRole("ADMIN")
+                    .antMatchers("/employees/**").hasAnyRole(new String[]{"EMPLOYEE", "ADMIN"})
                // .antMatchers("/hello").not().hasRole("ADMIN")
-                .antMatchers("/").permitAll()
+                    .antMatchers("/").permitAll()
                 .and()
-                .formLogin().permitAll()
+                    .formLogin().permitAll()
                     .loginPage("/authentication/login")
                     .usernameParameter("username")
                     .passwordParameter("password")
                 .and()
-                .logout().permitAll()
+                    .logout().permitAll()
                     .logoutUrl("/authentication/logout")
                     .logoutSuccessUrl("/")
                 .and()
-                .rememberMe()
+                    .rememberMe()
                     .rememberMeParameter("remember-me-parameter");
     }
 }

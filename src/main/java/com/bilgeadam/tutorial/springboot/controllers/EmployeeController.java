@@ -5,7 +5,6 @@ import com.bilgeadam.tutorial.springboot.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public String listEmployees(Model model,
                                 @RequestParam(name = "page", defaultValue = defaultPage) Integer page,

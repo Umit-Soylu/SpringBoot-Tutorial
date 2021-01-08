@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{employee.list.title}">Title</title>
+    <script src="/js/effects.js"></script>
+
 </head>
-<body>
+<body onload="trigger(); counter()" >
 <div>
-    <h3 th:text="#{employee.list.header}">Header</h3>
+    <p id="hover">Hi!</p>
+    <p id="counter">0</p>
+</div>
+<div>
+    <h3 id ="scr" th:text="#{employee.list.header}">Header</h3>
     <hr>
+    <button type="button" onclick="titleChanger()">Click Me!!!</button>
 </div>
 <div>
     <a th:href="@{/employees/create}" th:text="#{employee.list.link.create}">Add employee</a>
