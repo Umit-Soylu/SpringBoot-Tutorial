@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{employee.list.title}">Title</title>
-    <script src="/js/effects.js"></script>
-
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
-<body onload="trigger(); counter()" >
-<div>
-    <p id="hover">Hi!</p>
-    <p id="counter">0</p>
-</div>
+<body>
+<header th:replace="/fragments/header::common-header">HEADER</header>
+
 <div>
     <h3 id ="scr" th:text="#{employee.list.header}">Header</h3>
     <hr>
-    <button type="button" onclick="titleChanger()">Click Me!!!</button>
 </div>
 <div>
     <a th:href="@{/employees/create}" th:text="#{employee.list.link.create}">Add employee</a>
     <hr>
 </div>
+
 <div>
     <table>
         <thead>
@@ -50,8 +47,7 @@
        th:text="${pageNumber}">Page</a>
 </div>
 
-<div>
-    <p><a th:href="@{/authentication/logout}" th:text="#{generic.logout}">Logout Button</a> </p>
-</div>
+
+<footer th:replace="fragments/footer::common-footer"></footer>
 </body>
 </html>

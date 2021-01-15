@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{welcome.title}">Test</title>
-    <script>
-        function myDate() {
-            document.getElementById('date').innerHTML = new Date();
-        }
-    </script>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
-<body onload="myDate()">
-<div th:replace="/fragments/header::common-header">Header</div>
-<br>
+<body>
+<header th:replace="/fragments/header::common-header">HEADER</header>
 
 <div>
     <p id="test"><a th:text="#{welcome.link.employee.create.message}" th:href="@{/employees/create}">Employee Create Link</a></p>
@@ -21,5 +17,6 @@
 
     </div>
 </div>
+<footer th:replace="fragments/footer::common-footer"></footer>
 </body>
 </html>

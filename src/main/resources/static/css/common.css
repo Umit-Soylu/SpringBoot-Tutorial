@@ -1,45 +1,77 @@
-.header-box {
-    border: darkred;
-    padding: 2px;
-    background-color: cyan;
+p {
+    font-family: "Gujarati Sangam MN", sans-serif;
+    font-size: medium;
+    font-min-size: 15px;
+    font-max-size: 25px;
+    font-style: normal;
+
+    text-align: left;
+
+    margin: 3px;
+    outline: dot-dash 2px cyan;
+    padding: 5px;
 }
 
-.header-box:hover{
-    border-radius: 15px;
+li{
+    font-family: "Droid Sans Mono Slashed", monospace;
+    font-size: small;
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+.p-centered{
+   text-align: center;
+}
+.header-style ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+.header-style li{
+    float: left;
+    border-right: 1px solid #bbb;
+}
+.header-style li:last-child{
+    border-right: none;
 }
 
-.header-box-dropdown{
-    position: relative;
-    display: inline-block;
-}
-
-.header-box-dropdown-content{
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,2);
-    padding: 12px 12px;
-    z-index: -1;
-}
-
-.header-box-dropdown:hover .header-box-dropdown-content{
+.header-style a{
     display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
-.header-box:visited{
-    color: darkmagenta;
+.header-style a:hover{
+    color: darkcyan;
+    background-color: beige;
+}
+.footer-style div{
+    background-color: #333;
+    text-align: right;
 }
 
-.footer-text{
-    display: grid;
-    grid-template-columns: 70% 30%;
+.footer-style a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-.footer-left-col{
-    background-color: azure;
-    font-size: 14px;
+.footer-style a:hover{
+    color: darkcyan;
+    background-color: beige;
 }
-.footer-right-col{
-    background-color: aquamarine;
-    font-size: 14px;
+div{
+    display: block;
+    margin: 5px;
+    border: dot-dash 2px cadetblue;
+    padding: 4px;
+}
+
+a{
+    font-family: "Apple Braille", monospace;
+    font-size: large;
 }

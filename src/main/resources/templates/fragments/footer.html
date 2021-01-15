@@ -1,25 +1,18 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <meta charset="UTF-8">
     <title>Footer</title>
-    <script src="js/effects.js"></script>
 </head>
-<body onload="getToday()">
-
-<footer th:fragment="common-footer" class="footer-text">
-    <div class="footer-left-col" th:text="#{welcome.time.message}"><span id="date">TODAY</span></div>
-
-    <div class="footer-right-col">
-        <a sec:authorize="isAuthenticated()"
-           th:text="${#authentication.name}"
-           th:href="@{/authentication/logout}"> Name </a>
-        <a sec:authorize="isAnonymous()"
-           th:text="#{login.title}"
-           th:href="@{/authentication/login}"> Login</a>
+<body>
+<footer th:fragment="common-footer" class="footer-style">
+    <div sec:authorize="isAuthenticated()">
+        <p th:text="${#authentication.name}">Name</p>
+        <a th:href="@{/authentication/logout}" th:text="#{logout.title}">Logout</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/authentication/login}" th:text="#{login.title}">Login</a>
     </div>
 </footer>
 </body>

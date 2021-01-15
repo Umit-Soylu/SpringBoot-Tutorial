@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{index.title}">Title</title>
+
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
-<div th:replace="/fragments/header::common-header">Header</div>
+<header th:replace="/fragments/header::common-header">HEADER</header>
 
-<br>
-<div>
-    <p th:text="#{index.paragraph-1}">ds</p>
-    <p th:text="#{index.paragraph-2}">sehj</p>
+<main>
+    <section>
+        <p th:text="#{index.paragraph-1}">ds</p>
+        <p th:text="#{index.paragraph-2}">sehj</p>
 
-    <ul>
-        <li th:text="#{index.list.first}">First</li>
-        <li th:text="#{index.list.second}">Second</li>
-        <li th:text="#{index.list.third}">Third</li>
-    </ul>
-</div>
-<div>
-    <p> <a th:href="@{/hello}" th:text="#{index.link.text}">here</a>.</p>
-</div>
+        <ul>
+            <li th:text="#{index.list.first}">First</li>
+            <li th:text="#{index.list.second}">Second</li>
+            <li th:text="#{index.list.third}">Third</li>
+        </ul>
+    </section>
+    <br>
+    <section>
+        <p class="p-centered"> <a th:href="@{/hello}" th:text="#{index.link.text}">here</a>.</p>
+    </section>
+</main>
 
-<div th:replace="/fragments/footer::common-footer">Footer</div>
+<footer th:replace="fragments/footer::common-footer"></footer>
 </body>
 </html>

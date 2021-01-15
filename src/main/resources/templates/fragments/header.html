@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
+    <style>
+        a{
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-
-<header th:fragment="common-header">
-    <div style="align-items: center; columns: 3; text-align: center">
-        <nav>
-            <a class="header-box" th:href="@{/}" th:text="#{header.link.welcome}">Root</a>
-            <a class="header-box" th:href="@{/hello}" th:text="#{header.link.hello}">Hello</a>
-
-        </nav>
-        <div class="header-box-dropdown" th:text="#{header.link.Employees}">
-            <div class="header-box-dropdown-content"> <a th:href="@{/employees/list}">List</a></div>
-            <div class="header-box-dropdown-content"> <a th:href="@{/employees/create}">Create</a></div>
-        </div>
-    </div>
+<header th:fragment="common-header" class="header-style">
+    <ul>
+        <li>
+            <a th:href="@{/}" th:text="#{header.link.welcome}">Welcome</a>
+        </li>
+        <li>
+            <a th:href="@{/hello}" th:text="#{header.link.hello}">Hello</a>
+        </li>
+        <li>
+            <a th:href="@{/employees/list}" th:text="#{header.link.Employees}">Employees</a>
+        </li>
+    </ul>
 </header>
-
 </body>
 </html>
