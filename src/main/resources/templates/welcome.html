@@ -5,6 +5,8 @@
     <title th:text="#{welcome.title}">Test</title>
 
     <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <script src="/js/common.js"></script>
 </head>
 <body>
 <header th:replace="/fragments/header::common-header">HEADER</header>
@@ -16,6 +18,29 @@
     <div th:text="#{welcome.time.message}">Time :<span id="date">Today</span>
 
     </div>
+    <br>
+    <script>
+        function s(){
+            alert("Welcome to JS!!!")
+        }
+    </script>
+    <input type="button" value="Click for a message" onclick="s()">
+
+    <form name="demo" action="">
+        <input type="text" id="input" value="Message">
+        <input type="button" value="Show input" onclick="display(input)">
+    </form>
+
+    <form name="demo2" action="">
+        <input type="number" id="x">
+        <input type="number" id="y">
+        <input type="button" value="Add" onclick="add()">
+    </form>
+
+    <br>
+    <p id="fruits">Fruits</p>
+    <input id="newFruit" type="text">
+    <button value="add fruit" onclick="fruitAdder()">Add Fruit</button>
 </div>
 <footer th:replace="fragments/footer::common-footer"></footer>
 </body>

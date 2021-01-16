@@ -24,6 +24,9 @@
     <section>
         <p class="p-centered"> <a th:href="@{/hello}" th:text="#{index.link.text}">here</a>.</p>
     </section>
+    <section>
+        <button id="demo" onclick="document.getElementById('demo').innerHTML = Date()">What is time?</button>
+    </section>
 </main>
 
 <footer th:replace="fragments/footer::common-footer"></footer>
