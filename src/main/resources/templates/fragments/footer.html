@@ -14,6 +14,12 @@
     <div sec:authorize="isAnonymous()">
         <a th:href="@{/authentication/login}" th:text="#{login.title}">Login</a>
     </div>
+    <div>
+        <p id = "time"
+           style="color: blanchedalmond"
+           onmouseover="document.getElementById('time').innerHTML = (new Date())"
+           onmouseleave="document.getElementById('time').innerHTML = 'Come here for time!'">Come here for time!</p>
+    </div>
 </footer>
 </body>
 </html>

@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{login.title}">Title</title>
+
+    <script>
+        let x = 0;
+        function displayWarning(){
+            if (x < 1)
+                alert('Your password should contain at least 6 characters.')
+            x++;
+        }
+    </script>
 </head>
 <body>
 <div>
@@ -18,7 +27,8 @@
             </tr>
             <tr>
                 <td th:text="#{login.password}">Password</td>
-                <td><input type="password" name="password"></td>
+                <td><input type="password" name="password"
+                           onfocus=displayWarning()></td>
             </tr>
             <tr>
                 <td th:text="#{login.remember}">Remember me</td>

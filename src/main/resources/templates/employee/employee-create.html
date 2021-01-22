@@ -14,7 +14,11 @@
 </div>
 
 <div th:if="${employee.id} != null">
-    <form action="#" th:action="@{/employees/update}" th:method="POST" th:object="${employee}">
+    <form action="#" th:action="@{/employees/update}" th:method="POST" th:object="${employee}"
+          onsubmit="function test(){
+
+              return false;
+          }">
         <input type="hidden" th:field="*{id}">
 
         <table>

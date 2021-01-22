@@ -5,8 +5,10 @@
     <title th:text="#{welcome.title}">Test</title>
 
     <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <script src="js/common.js"></script>
 </head>
-<body>
+<body onload="welcomeMessage()">
 <header th:replace="/fragments/header::common-header">HEADER</header>
 
 <div>
@@ -16,6 +18,16 @@
     <div th:text="#{welcome.time.message}">Time :<span id="date">Today</span>
 
     </div>
+</div>
+<div>
+    <button value="Change Font Style" onclick="changeStyle()">Test</button>
+</div>
+<div>
+    <form name="Add Values" action="">
+        <input type="number" id="x" value="99">
+        <input type="number" id="y" value="101">
+        <input type="button" value="Add 2 Numbers" id= "sum" onclick="addTwoValues()">
+    </form>
 </div>
 <footer th:replace="fragments/footer::common-footer"></footer>
 </body>
