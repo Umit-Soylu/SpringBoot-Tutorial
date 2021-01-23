@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{employee.create.title}">Title</title>
+
     <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <script th:src="@{/js/validator.js}"></script>
 </head>
+
 <body>
 <header th:replace="/fragments/header::common-header">HEADER</header>
 
@@ -14,11 +18,7 @@
 </div>
 
 <div th:if="${employee.id} != null">
-    <form action="#" th:action="@{/employees/update}" th:method="POST" th:object="${employee}"
-          onsubmit="function test(){
-
-              return false;
-          }">
+    <form action="#" th:action="@{/employees/update}" th:method="POST" th:object="${employee}">
         <input type="hidden" th:field="*{id}">
 
         <table>
@@ -57,12 +57,14 @@
 
 
 <div th:if="${employee.id} == null">
-    <form action="#" th:action="@{/employees/save}" method="POST" th:object="${employee}">
+    <form action="#" th:action="@{/employees/save}" method="POST" th:object="${employee}"
+          onsubmit="return checkForm()">
        <table>
             <tr>
                 <td th:text="#{employee.create.firstname}">First Name</td>
                 <td>
-                    <input type="text" th:maxlength="*{maxLength}"
+                    <input id="firstname" th:name="#{employee.create.firstname}"
+                           type="text" th:maxlength="*{maxLength}"
                            th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
                            th:field="*{firstName}">
                 </td>
@@ -71,7 +73,8 @@
             <tr>
                 <td th:text="#{employee.create.lastname}">Last Name</td>
                 <td>
-                    <input type="text" th:maxlength="*{maxLength}"
+                    <input id="lastname" th:name="#{employee.create.lastname}"
+                           type="text" th:maxlength="*{maxLength}"
                            th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
                            th:field="*{lastName}">
                 </td>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -60,7 +61,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/update")
-    public String updateEmployee(@ModelAttribute(name = "employee") Employee employee){
+    public String updateEmployee(@Valid @ModelAttribute(name = "employee") Employee employee){
         employeeService.update(employee);
 
         return "redirect:/employees/list";

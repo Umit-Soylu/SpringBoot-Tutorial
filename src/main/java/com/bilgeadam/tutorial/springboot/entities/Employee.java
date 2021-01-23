@@ -13,10 +13,11 @@ public class Employee {
     @Column
     private Integer id;
 
+    @Size(min = 5, max = maxLength)
+    //@Min(2)
     @Column(name = "first_name", length = maxLength, nullable = false)
     private String firstName;
 
-    @Size(min = 1, max = 50)
     @Column(name = "last_name", length = maxLength, nullable = false)
     private String lastName;
 
