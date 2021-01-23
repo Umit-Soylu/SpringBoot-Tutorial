@@ -1,23 +1,34 @@
 package com.bilgeadam.tutorial.springboot.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "employees")
+@Getter @Setter @ToString @NoArgsConstructor @RequiredArgsConstructor
 public class Employee {
-    private static final int maxLength = 15;
+    @Getter private static final int maxLength = 15;
+    @Getter private static final int minLength = 3;
+    private static final String regex = "^\\w{" + minLength +"," + maxLength + "}\\Z";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
+    @Setter(value = AccessLevel.PROTECTED)
+    @ToString.Exclude private Integer id;
 
-    @Size(min = 5, max = maxLength)
-    //@Min(2)
+    @Size(min = minLength, max = maxLength)
+    @Pattern(regexp = regex, flags = Pattern.Flag.CASE_INSENSITIVE)
+    @NonNull
     @Column(name = "first_name", length = maxLength, nullable = false)
     private String firstName;
 
+    @NonNull
+    @Pattern(regexp = regex, flags = Pattern.Flag.CASE_INSENSITIVE)
     @Column(name = "last_name", length = maxLength, nullable = false)
     private String lastName;
 
@@ -25,63 +36,7 @@ public class Employee {
     @Column(name = "gender")
     private Gender gender;
 
-    // Hibernate needs this
-    public Employee() {
-    }
-
-    /**
-     * Constructor with essentials
-     * @param firstName First name
-     * @param lastName  Last name
-     */
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public static int getMaxLength() {
-        return maxLength;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
+    @Email //https://github.com/hibernate/hibernate-validator/blob/master/engine/src/main/java/org/hibernate/validator/internal/constraintvalidators/bv/EmailValidator.java?source=cc
+    @Column(name = "email")
+    private String email;
 }

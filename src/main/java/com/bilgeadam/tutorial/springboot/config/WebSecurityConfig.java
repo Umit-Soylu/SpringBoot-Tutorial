@@ -53,6 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .rememberMe()
                     .rememberMeParameter("remember-me-parameter")
-                    .tokenValiditySeconds(15*60);
+                    .tokenValiditySeconds(15*60)
+                .and()
+                    .sessionManagement().
+                        maximumSessions(1).
+                        maxSessionsPreventsLogin(true).
+                        expiredUrl("/authentication/logout");
     }
+
+
 }
