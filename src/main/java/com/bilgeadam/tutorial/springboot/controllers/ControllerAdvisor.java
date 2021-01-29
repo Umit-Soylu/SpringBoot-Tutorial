@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -26,8 +27,20 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(TransactionSystemException.class)
+    public ResponseEntity<Object> handleRuntimeException(@NotNull IllegalRestArgument ex, WebRequest request){
+        return new ResponseEntity<>("Test", new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleValidationException(@NotNull IllegalRestArgument ex, WebRequest request){
+        return new ResponseEntity<>("Improper input", new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+    }
 
     @ExceptionHandler(IllegalRestArgument.class)
     public ResponseEntity<Object> handleIllegalArgument(@NotNull IllegalRestArgument ex, WebRequest request){
@@ -101,7 +114,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return super.handleBindException(ex, headers, status, request);
+        return new ResponseEntity<>("BINDING EXCEPTION", new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+        //return super.handleBindException(ex, headers, status, request);
     }
 
     @Override

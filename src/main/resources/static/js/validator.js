@@ -18,16 +18,17 @@ function checkElement(min, max, id){
 }
 
 function checkString(min, max, id){
-    //let regExp = new RegExp('^[a-zA-Z]{' + min + ',' + max + '}&');
-    let regExp = /^[a-zA-Z]{3,15}$/
+    let regExp = new RegExp('^[a-zA-Z]{' + min + ',' + max + '}$');
+    //let regExp = /^[a-zA-Z]{3,15}$/
 
     let element = document.getElementById(id).value;
 
-    if (regExp.test(element))
+    if (regExp.test(element)) {
+        document.getElementById(id).style.backgroundColor = 'rgb(255, 255, 255)';
         return true;
-    else{
+    } else{
         alert(document.getElementById(id).name + ' should be at least ' + min + ' and at most ' + max + ' characters.')
-        document.getElementById(id).value = '';
+        document.getElementById(id).style.backgroundColor = 'red';
         return false;
     }
 

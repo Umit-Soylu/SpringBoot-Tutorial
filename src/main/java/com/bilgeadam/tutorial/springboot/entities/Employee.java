@@ -1,23 +1,36 @@
 package com.bilgeadam.tutorial.springboot.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "employees")
+//@Getter @Setter @ToString @NoArgsConstructor @RequiredArgsConstructor
+@Data @NoArgsConstructor @RequiredArgsConstructor
 public class Employee {
-    private static final int maxLength = 15;
+    @Getter private static final int maxLength = 15;
+    @Getter private static final int minLength = 5;
+    @Getter private static final String regex = "^[a-zA-Z]{" + minLength + "," + maxLength + "}$";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer id;
+    @Setter(AccessLevel.PACKAGE)
+    @ToString.Exclude private Integer id;
 
-    @Size(min = 5, max = maxLength)
-    //@Min(2)
+    //@Min(minLength) @Max(maxLength)
+    @NonNull
+    @Pattern(regexp = regex, flags = Pattern.Flag.CASE_INSENSITIVE)
     @Column(name = "first_name", length = maxLength, nullable = false)
     private String firstName;
 
+    //@Min(minLength) @Max(maxLength)
+    @NonNull
+    @Pattern(regexp = regex, flags = Pattern.Flag.CASE_INSENSITIVE)
     @Column(name = "last_name", length = maxLength, nullable = false)
     private String lastName;
 
@@ -25,63 +38,9 @@ public class Employee {
     @Column(name = "gender")
     private Gender gender;
 
-    // Hibernate needs this
-    public Employee() {
-    }
+    @Size(max = 25)
+    @OneToMany(orphanRemoval = true, mappedBy = "employee")
+    private Set<Address> addresses;
 
-    /**
-     * Constructor with essentials
-     * @param firstName First name
-     * @param lastName  Last name
-     */
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public static int getMaxLength() {
-        return maxLength;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
+    @Setter(AccessLevel.PACKAGE) private String email;
 }

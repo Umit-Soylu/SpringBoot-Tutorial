@@ -49,6 +49,10 @@
                     </select>
                 </td>
             </tr>
+            <td>
+                <input th:name="#{employee.create.address}"
+                       type="text" th:field="*{addresses}">
+            </td>
         </table>
         <button type="submit" th:text="#{employee.create.button.submit}">Save</button>
         <button type="reset" th:text="#{employee.create.button.reset}">Reset</button>
@@ -89,6 +93,8 @@
                     </select>
                 </td>
             </tr>
+
+
         </table>
         <button type="submit" th:text="#{employee.create.button.submit}">Save</button>
         <button type="reset" th:text="#{employee.create.button.reset}">Reset</button>

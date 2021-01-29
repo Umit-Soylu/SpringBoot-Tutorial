@@ -15,9 +15,6 @@ function addTwoValues() {
 
     document.getElementById('sum').value = sum;
 
-    console.log(numberOne);
-    console.log(numberTwo);
-    console.log(sum);
 }
 
 function changeStyle() {

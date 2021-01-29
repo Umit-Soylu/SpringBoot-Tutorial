@@ -2,6 +2,8 @@ package com.bilgeadam.tutorial.springboot.controllers;
 
 import com.bilgeadam.tutorial.springboot.entities.Employee;
 import com.bilgeadam.tutorial.springboot.services.EmployeeService;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -14,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-
+@Log4j2
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -34,6 +36,8 @@ public class EmployeeController {
     public String listEmployees(Model model,
                                 @RequestParam(name = "page", defaultValue = defaultPage) Integer page,
                                 @RequestParam(name = "size", defaultValue = defaultSize) Integer size){
+        log.log(Level.FATAL, "TEST");
+
         Page<Employee> employeePage = employeeService.findAll(page, size);
         // Add employees
         model.addAttribute("employees", employeePage.getContent());
@@ -54,7 +58,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute(name = "employee") Employee employee){
+    public String saveEmployee(@Valid @ModelAttribute(name = "employee") Employee employee){
         //(Employee) model.getAttribute("employee")
         employeeService.save(employee);
         return "redirect:/employees/list";

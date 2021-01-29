@@ -24,8 +24,9 @@
 </div>
 <div>
     <form name="Add Values" action="">
-        <input type="number" id="x" value="99">
-        <input type="number" id="y" value="101">
+        <input type="number" id="x" value="99" >
+        <input type="number" id="y" value="101" disabled
+               onclick="document.getElementById('y').removeAttribute('disabled')">
         <input type="button" value="Add 2 Numbers" id= "sum" onclick="addTwoValues()">
     </form>
 </div>
