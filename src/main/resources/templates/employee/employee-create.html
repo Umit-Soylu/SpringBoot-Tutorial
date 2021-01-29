@@ -68,7 +68,7 @@
                 <td th:text="#{employee.create.firstname}">First Name</td>
                 <td>
                     <input id="firstname" th:name="#{employee.create.firstname}"
-                           type="text" th:maxlength="*{maxLength}"
+                           type="text" th:maxlength="*{maxLength}" th:minlength="*{minLength}"
                            th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
                            th:field="*{firstName}">
                 </td>
@@ -78,7 +78,7 @@
                 <td th:text="#{employee.create.lastname}">Last Name</td>
                 <td>
                     <input id="lastname" th:name="#{employee.create.lastname}"
-                           type="text" th:maxlength="*{maxLength}"
+                           type="text" th:maxlength="*{maxLength}" th:minlength="*{minLength}"
                            th:placeholder="#{employee.create.text.placeholder} + ' ' + *{maxLength}"
                            th:field="*{lastName}">
                 </td>
